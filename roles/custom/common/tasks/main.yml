@@ -1,0 +1,9 @@
+# Utility
+
+- name: Install system utility
+  apt: pkg={{ item }}
+  with_items:
+    - htop
+    - git-core
+    - build-essential
+    - sshguard

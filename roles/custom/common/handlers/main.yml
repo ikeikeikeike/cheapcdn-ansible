@@ -1,0 +1,7 @@
+- name: restart sshd
+  service: name=ssh state=restarted
+  sudo: yes
+
+- name: reload sshd
+  service: name=ssh state=reloaded
+  sudo: yes

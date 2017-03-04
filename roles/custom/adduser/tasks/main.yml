@@ -1,0 +1,40 @@
+# Create Linux user.
+
+- name: create linux user
+  user: name={{ username }} password={{ password }}
+
+- name: create directory
+  file: dest=/home/{{ username }}/.ssh
+        owner={{ username }}
+        group={{ username }}
+        mode=700
+        state=directory
+
+- name: private key for bitbucket.
+  copy: content={{ id_rsa }}
+        dest=/home/{{ username }}/.ssh/id_rsa
+        owner={{ username }}
+        group={{ username }}
+        mode=0600
+
+- name: public key for login. note> overwrite
+  copy: content={{ id_rsa_pub }}
+        dest=/home/{{ username }}/.ssh/authorized_keys
+        owner={{ username }}
+        group={{ username }}
+        mode=0644
+
+- name: add bash_profile note> overwrite
+  template: src=bash_profile.j2
+            dest=/home/{{ username }}/.bash_profile
+            owner={{ username }}
+            group={{ username }}
+            mode=0644
+
+- name: nopassword configuration
+  lineinfile: dest=/etc/sudoers.d/{{ username }}
+              backrefs=false
+              create=yes
+              mode=0440
+              line="{{ username }} ALL=(ALL) NOPASSWD:ALL"
+              validate='visudo -cf %s'

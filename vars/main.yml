@@ -39,3 +39,13 @@ nginx_vhosts:
         location / {
             proxy_pass http://object_backend;
         }
+
+# Minio
+minio_user: "{{ username }}"
+minio_group: "{{ username }}"
+minio_server_datadirs:
+  - "/home/{{ username }}/object"
+
+# Swapfile
+swap_file_path: /swapfile
+swap_file_size_gb: 1
