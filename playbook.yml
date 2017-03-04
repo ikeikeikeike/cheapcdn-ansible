@@ -17,9 +17,10 @@
     - setup: # aka gather_facts
 
   roles:
-    - { role: custom/common }
-    - { role: custom/swapfile }
-    - { role: custom/adduser }
-    - { role: galaxy/geerlingguy.nginx }
-    - { role: galaxy/ansible-minio }
-    - { role: galaxy/joshualund.golang }
+    # - { role: custom/common }
+    # - { role: custom/swapfile }
+    # - { role: custom/adduser }
+    # - { role: galaxy/geerlingguy.nginx }
+    # - { role: galaxy/ansible-minio }
+    # - { role: galaxy/joshualund.golang }
+    - { role: custom/cheapcdn }

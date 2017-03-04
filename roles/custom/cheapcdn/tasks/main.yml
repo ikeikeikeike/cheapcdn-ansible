@@ -1,0 +1,5 @@
+- name: install go modules
+  sudo_user: "{{ username }}"
+  command: /usr/local/go/bin/go get {{ item }}
+  with_items:
+    - github.com/ikeikeikeike/cheapcdn
