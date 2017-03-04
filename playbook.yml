@@ -1,0 +1,20 @@
+---
+
+- name: provisining for cheapcdn
+
+  vars_files:
+    - vars/secret.yml
+    - vars/main.yml
+
+  sudo: yes
+  hosts: production
+
+  gather_facts: False
+  pre_tasks:
+    - name: Install python for Ansible
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      changed_when: False
+    - setup: # aka gather_facts
+
+  roles:
+    - { role: galaxy/geerlingguy.nginx }

@@ -1,0 +1,5 @@
+*.retry
+/venv
+/roles/galaxy
+/vars/secret.yml
+/ssh_config
