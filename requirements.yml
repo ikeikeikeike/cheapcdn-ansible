@@ -1,2 +1,3 @@
 - src: geerlingguy.nginx
+- src: joshualund.golang
 - src: https://github.com/atosatto/ansible-minio

@@ -49,3 +49,8 @@ minio_server_datadirs:
 # Swapfile
 swap_file_path: /swapfile
 swap_file_size_gb: 1
+
+# Golang
+go_tarball: "go1.8.linux-amd64.tar.gz"
+go_tarball_checksum: "sha256:53ab94104ee3923e228a2cb2116e5e462ad3ebaeea06ff04463479d7f12d27ca"
+go_version_target: "go version go1.8 linux/amd64"
