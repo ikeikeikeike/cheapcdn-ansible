@@ -92,10 +92,10 @@ elao_supervisor_configs:
     template: configs/program_prod.conf.j2
     config: |
         [program:cheapcdn]
-        user={{ username }}
-
-        command=/home/{{ username }}/.rbenv/bin/rbenv exec einhorn -b 127.0.0.1:8888 -e /tmp/einhorn.pid -d /tmp/einhorn.sock -- ./cheapcdn
+        command=/home/{{ username }}/.rbenv/shims/einhorn -b 127.0.0.1:8888 -e /tmp/einhorn.pid -d /tmp/einhorn.sock -- ./cheapcdn
         directory=/home/{{ username }}/go/src/github.com/ikeikeikeike/cheapcdn
+
+        user={{ username }}
 
         autostart=true
         autorestart=true
@@ -107,7 +107,3 @@ elao_supervisor_configs:
         stdout_logfile=/var/log/supervisor/cheapcdn.log
         stdout_logfile_maxbytes=50MB
         stdout_logfile_backups=10
-        stderr_logfile=/var/log/supervisor/cheapcdn_error.log
-        stderr_logfile_maxbytes=50MB
-        stderr_logfile_backups=10
-

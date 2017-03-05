@@ -4,5 +4,6 @@
   apt:
     name:  "{{ item }}"
     state: present
+    enabled: yes
   with_items:
     - supervisor
