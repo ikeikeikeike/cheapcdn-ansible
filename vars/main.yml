@@ -1,4 +1,5 @@
 # Nginx
+#
 nginx_worker_processes: "auto"
 nginx_worker_connections: 10240
 nginx_multi_accept: "on"
@@ -45,17 +46,68 @@ nginx_vhosts:
             proxy_pass http://object_backend;
         }
 
+
+
 # Minio
+#
 minio_user: "{{ username }}"
 minio_group: "{{ username }}"
 minio_server_datadirs:
   - "/home/{{ username }}/object"
 
+
+
 # Swapfile
+#
 swap_file_path: /swapfile
 swap_file_size_gb: 1
 
+
+
 # Golang
+#
 go_tarball: "go1.8.linux-amd64.tar.gz"
 go_tarball_checksum: "sha256:53ab94104ee3923e228a2cb2116e5e462ad3ebaeea06ff04463479d7f12d27ca"
 go_version_target: "go version go1.8 linux/amd64"
+
+
+
+# Ruby for Einhorn
+#
+rbenv:
+  env: user
+  version: v1.0.0
+  default_ruby: 2.3.3
+  rubies:
+    - version: 2.3.3
+
+rbenv_users:
+  - "{{ username }}"
+
+
+# Supervisor
+#
+elao_supervisor_configs:
+  - file:     cheapcdn.conf
+    template: configs/program_prod.conf.j2
+    config: |
+        [program:cheapcdn]
+        user={{ username }}
+
+        command=/home/{{ username }}/.rbenv/bin/rbenv exec einhorn -b 127.0.0.1:8888 -e /tmp/einhorn.pid -d /tmp/einhorn.sock -- ./cheapcdn
+        directory=/home/{{ username }}/go/src/github.com/ikeikeikeike/cheapcdn
+
+        autostart=true
+        autorestart=true
+        redirect_stderr=true
+
+        startsecs=5
+        startretries=10
+
+        stdout_logfile=/var/log/supervisor/cheapcdn.log
+        stdout_logfile_maxbytes=50MB
+        stdout_logfile_backups=10
+        stderr_logfile=/var/log/supervisor/cheapcdn_error.log
+        stderr_logfile_maxbytes=50MB
+        stderr_logfile_backups=10
+

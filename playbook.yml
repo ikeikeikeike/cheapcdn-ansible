@@ -20,7 +20,12 @@
     - { role: custom/common }
     - { role: custom/swapfile }
     - { role: custom/adduser }
-    - { role: galaxy/geerlingguy.nginx }
+
     - { role: galaxy/ansible-minio }
     - { role: galaxy/joshualund.golang }
-    - { role: custom/cheapcdn }
+    - { role: galaxy/zzet.rbenv }
+
+    - { role: custom/cheapcdn }              # Install cheapcdn with golang
+    - { role: custom/einhorn }               # Install einhorn with rbenv@ruby
+    - { role: custom/elao.supervisor.custom } # Configure einhorn into superbisor
+    - { role: galaxy/geerlingguy.nginx }     # Configure cheapcdn into nginx

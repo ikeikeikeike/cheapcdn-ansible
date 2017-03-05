@@ -1,0 +1,7 @@
+# - name: Make sure installation that exists einhorn on local
+  # command: {{ rbenv_root }}/bin/rbenv exec gem  list --local einhorn
+  # sudo_user: "{{ username }}"
+
+- name: Install Einhorn
+  command: "/home/{{ username }}/.rbenv/bin/rbenv exec gem install einhorn"
+  sudo_user: "{{ username }}"

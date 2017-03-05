@@ -1,5 +1,11 @@
-- name: install go modules
+- name: Install cheapcdn
   sudo_user: "{{ username }}"
   command: /usr/local/go/bin/go get {{ item }}
   with_items:
     - github.com/ikeikeikeike/cheapcdn
+
+- name: Build cheapcdn
+  sudo_user: "{{ username }}"
+  command: |
+      /usr/local/go/bin/go build
+      chdir=/home/{{ username }}/go/src/github.com/ikeikeikeike/cheapcdn
