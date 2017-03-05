@@ -9,6 +9,8 @@
   sudo: yes
   hosts: production
 
+  strategy: free
+
   gather_facts: False
   pre_tasks:
     - name: Install python for Ansible
