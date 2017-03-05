@@ -1,11 +1,15 @@
 # Nginx
 nginx_worker_processes: "auto"
-nginx_worker_connections: 65535
+nginx_worker_connections: 10240
 nginx_multi_accept: "on"
-nginx_client_max_body_size: "64m"
+nginx_client_max_body_size: "500M"
+# nginx_accept_mutex_delay: "100ms"
 
 nginx_extra_conf_options: |
-  worker_rlimit_nofile 150000;
+  worker_rlimit_nofile 30720;
+
+nginx_server_tokens: "off"
+nginx_tcp_nopush: "on"
 
 nginx_extra_http_options: |
   gzip on;
@@ -14,12 +18,13 @@ nginx_extra_http_options: |
   proxy_send_timeout        120;
   proxy_connect_timeout     120;
 
+  proxy_intercept_errors    on;
+
   proxy_set_header          Connection 'keep-alive';
   proxy_set_header          X-Real-IP $remote_addr;
   proxy_set_header          X-Scheme $scheme;
   proxy_set_header          X-Forwarded-For $proxy_add_x_forwarded_for;
   proxy_set_header          Host $http_host;
-  proxy_intercept_errors    on;
 
 nginx_upstreams:
   - name: object_backend
