@@ -4,6 +4,10 @@
   apt:
     name:  "{{ item }}"
     state: present
-    enabled: yes
   with_items:
     - supervisor
+
+- service:
+    name: supervisor
+    state: started
+    enabled: yes
