@@ -4,7 +4,13 @@
   apt: pkg={{ item }}
   with_items:
     - python-zipstream
+    - aptitude
     - htop
     - git-core
     - build-essential
     - sshguard
+
+- apt:
+    upgrade: full
+    update_cache: yes
+    cache_valid_time: 31536000

@@ -3,3 +3,5 @@
 /roles/galaxy
 /vars/secret.yml
 /ssh_config
+/.vagrant
+/ubuntu-*
