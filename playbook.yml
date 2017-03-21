@@ -7,8 +7,8 @@
     - vars/main.yml
 
   sudo: yes
-  # hosts: vagrant
   hosts: production
+  # hosts: vagrant
 
   strategy: free
 
@@ -23,6 +23,7 @@
     - { role: custom/common }
     - { role: custom/swapfile }
     - { role: custom/adduser }
+    - { role: custom/minio }
 
     - { role: galaxy/ansible-minio }
     - { role: galaxy/joshualund.golang }

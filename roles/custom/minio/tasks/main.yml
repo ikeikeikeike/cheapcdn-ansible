@@ -1,0 +1,8 @@
+- name: Change permission mino directory
+  file:
+    path: /mnt
+    mode: 0775
+    state: directory
+    recurse: yes
+    owner: "{{ username }}"
+    group: "{{ username }}"
