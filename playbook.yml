@@ -7,8 +7,8 @@
     - vars/main.yml
 
   sudo: yes
-  hosts: vagrant
-  # hosts: production
+  # hosts: vagrant
+  hosts: production
 
   strategy: free
 

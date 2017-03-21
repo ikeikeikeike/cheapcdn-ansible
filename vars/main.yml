@@ -3,7 +3,7 @@
 nginx_worker_processes: "auto"
 nginx_worker_connections: 10240
 nginx_multi_accept: "on"
-nginx_client_max_body_size: "500M"
+nginx_client_max_body_size: "1024M"
 # nginx_accept_mutex_delay: "100ms"
 
 nginx_extra_conf_options: |
@@ -46,6 +46,11 @@ nginx_vhosts:
             proxy_pass http://object_backend;
         }
 
+        location = /ping {
+            empty_gif;
+            access_log off;
+            break;
+        }
 
 
 # Minio
@@ -53,10 +58,14 @@ nginx_vhosts:
 minio_user: "{{ username }}"
 minio_group: "{{ username }}"
 minio_server_datadirs:
-  - "http://{{ hostvars['object1']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
-  - "http://{{ hostvars['object2']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
-  - "http://{{ hostvars['object3']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
-  - "http://{{ hostvars['object4']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
+  # - "http://{{ hostvars['object1']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
+  # - "http://{{ hostvars['object2']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
+  # - "http://{{ hostvars['object3']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
+  # - "http://{{ hostvars['object4']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
+  - "http://{{ hostvars['prd-object1']['ansible_eth1']['ipv4']['address'] }}/mnt/object1"
+  - "http://{{ hostvars['prd-object2']['ansible_eth1']['ipv4']['address'] }}/mnt/object2"
+  - "http://{{ hostvars['prd-object3']['ansible_eth1']['ipv4']['address'] }}/mnt/object3"
+  - "http://{{ hostvars['prd-object4']['ansible_eth1']['ipv4']['address'] }}/mnt/object4"
 
 # Swapfile
 #
