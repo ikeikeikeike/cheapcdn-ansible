@@ -53,9 +53,10 @@ nginx_vhosts:
 minio_user: "{{ username }}"
 minio_group: "{{ username }}"
 minio_server_datadirs:
-  - "/home/{{ username }}/object"
-
-
+  - "http://{{ hostvars['object1']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
+  - "http://{{ hostvars['object2']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
+  - "http://{{ hostvars['object3']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
+  - "http://{{ hostvars['object4']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
 
 # Swapfile
 #
