@@ -11,3 +11,5 @@
     name: supervisor
     state: started
     enabled: yes
+
+- shell: systemctl enable supervisor

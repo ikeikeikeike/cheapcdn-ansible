@@ -57,6 +57,7 @@ nginx_vhosts:
 #
 minio_user: "{{ username }}"
 minio_group: "{{ username }}"
+minio_server_addr: ":9091"
 minio_server_datadirs:
   # - "http://{{ hostvars['object1']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
   # - "http://{{ hostvars['object2']['ansible_enp0s8']['ipv4']['address'] }}/home/cheap/newobj1"
@@ -102,7 +103,15 @@ elao_supervisor_configs:
     template: configs/program_prod.conf.j2
     config: |
         [program:cheapcdn]
-        command=/home/{{ username }}/.rbenv/shims/einhorn -b 127.0.0.1:8888 -e /tmp/einhorn.pid -d /tmp/einhorn.sock -- ./cheapcdn
+        command=/home/{{ username }}/.rbenv/shims/einhorn
+                        -b 127.0.0.1:8888
+                        -e /tmp/einhorn.pid
+                        -d /tmp/einhorn.sock -- ./cheapcdn
+                                                  -user {{ cheapcdn_user }}
+                                                  -pass {{ cheapcdn_pass }}
+                                                  -salt {{ cheapcdn_salt }}
+                                                  -dest http://127.0.0.1:9091
+
         directory=/home/{{ username }}/go/src/github.com/ikeikeikeike/cheapcdn
 
         user={{ username }}
