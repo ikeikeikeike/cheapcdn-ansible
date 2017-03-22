@@ -20,6 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     provider.customize [
       "modifyvm", :id,
       "--memory", "768",
+      "--resize", "46080",  # 45G
       # "--cpus", "1",
       # "--ioapic", "on"
     ]

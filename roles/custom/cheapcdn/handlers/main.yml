@@ -1,3 +1,0 @@
-- name: graceful restart einhorn
-  command: "/home/{{ username }}/.rbenv/shims/einhornsh -d /tmp/einhorn.sock -e upgrade"
-  sudo_user: "{{ username }}"

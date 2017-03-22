@@ -95,6 +95,8 @@ rbenv:
 rbenv_users:
   - "{{ username }}"
 
+cheapcdn:
+  sock: /tmp/einhorn.sock
 
 # Supervisor
 #

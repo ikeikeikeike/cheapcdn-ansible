@@ -9,4 +9,3 @@
   command: |
       /usr/local/go/bin/go build
       chdir=/home/{{ username }}/go/src/github.com/ikeikeikeike/cheapcdn
-  notify: graceful restart einhorn
