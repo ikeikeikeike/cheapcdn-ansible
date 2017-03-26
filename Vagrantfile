@@ -19,8 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Use VBoxManage to customize the VM. For example to change memory:
     provider.customize [
       "modifyvm", :id,
-      "--memory", "768",
-      "--resize", "46080",  # 45G
+      "--memory", "512",
       # "--cpus", "1",
       # "--ioapic", "on"
     ]
@@ -73,5 +72,54 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     web.vm.network :forwarded_port, host: 8008, guest: 8000
     web.vm.network :forwarded_port, id: "ssh", guest: 22, host: 2228
   end
+
+  config.vm.define :"object5" do |web|
+    web.vm.provider :virtualbox do |vbox|
+      vbox.name = "object5"
+    end
+
+    # web.vm.network :forwarded_port, host: 8001, guest: 8000
+    web.vm.network :private_network, ip: "192.168.33.29"
+    web.vm.network "public_network", ip: "192.168.10.104"
+    web.vm.network :forwarded_port, host: 8009, guest: 8000
+    web.vm.network :forwarded_port, id: "ssh", guest: 22, host: 2229
+  end
+
+  config.vm.define :"object6" do |web|
+    web.vm.provider :virtualbox do |vbox|
+      vbox.name = "object6"
+    end
+
+    # web.vm.network :forwarded_port, host: 8001, guest: 8000
+    web.vm.network :private_network, ip: "192.168.33.30"
+    web.vm.network "public_network", ip: "192.168.10.105"
+    web.vm.network :forwarded_port, host: 8010, guest: 8000
+    web.vm.network :forwarded_port, id: "ssh", guest: 22, host: 2230
+  end
+
+  # config.vm.define :"object7" do |web|
+  #   web.vm.provider :virtualbox do |vbox|
+  #     vbox.name = "object7"
+  #   end
+
+  #   # web.vm.network :forwarded_port, host: 8001, guest: 8000
+  #   web.vm.network :private_network, ip: "192.168.33.31"
+  #   web.vm.network "public_network", ip: "192.168.10.106"
+  #   web.vm.network :forwarded_port, host: 8011, guest: 8000
+  #   web.vm.network :forwarded_port, id: "ssh", guest: 22, host: 2231
+  # end
+
+  # config.vm.define :"object8" do |web|
+  #   web.vm.provider :virtualbox do |vbox|
+  #     vbox.name = "object8"
+  #   end
+
+  #   # web.vm.network :forwarded_port, host: 8001, guest: 8000
+  #   web.vm.network :private_network, ip: "192.168.33.32"
+  #   web.vm.network "public_network", ip: "192.168.10.107"
+  #   web.vm.network :forwarded_port, host: 8011, guest: 8000
+  #   web.vm.network :forwarded_port, id: "ssh", guest: 22, host: 2232
+  # end
+
 
 end

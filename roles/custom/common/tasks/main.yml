@@ -3,6 +3,7 @@
 - name: Install system utility
   apt: pkg={{ item }}
   with_items:
+    # - python-minimal
     - python-zipstream
     - aptitude
     - htop

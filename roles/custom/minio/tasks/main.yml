@@ -1,3 +1,8 @@
+- name: Install ntp
+  apt: pkg={{ item }}
+  with_items:
+    - ntp  # workaround: https://github.com/minio/minio/issues/3446#issuecomment-267011376
+
 - name: Change permission mino directory
   file:
     path: /mnt

@@ -1,0 +1,51 @@
+---
+
+- name: Restart minio and graceful restart cheapcdn
+
+  vars_files:
+    - vars/secret.yml
+    - vars/main.yml
+
+  sudo: yes
+  # hosts: production
+  hosts: vagrant
+
+  strategy: free
+
+  #gather_facts: False
+  #pre_tasks:
+  #  - name: Install python for Ansible
+  #    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  #    changed_when: False
+  #  - setup: # aka gather_facts
+
+  # roles:
+    # - { role: custom/restart }                # Configure cheapcdn into nginx
+
+  tasks:
+    - name: Install NTP
+      apt: pkg={{ item }}
+      with_items:
+        - ntp
+
+    - name: update date
+      shell: /etc/init.d/ntp restart
+
+    - name: kill minio
+      shell: pkill minio
+      ignore_errors: yes
+
+    - name: stop minio
+      shell: systemctl stop minio
+    - name: stop minio
+      shell: systemctl stop minio
+    - name: stop minio
+      shell: systemctl stop minio
+
+    - name: start minio
+      shell: systemctl start minio
+    - name: start minio
+      shell: systemctl start minio
+
+    # - name: restart minio
+      # shell: systemctl restart minio
