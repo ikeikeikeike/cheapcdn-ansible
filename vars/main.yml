@@ -13,6 +13,16 @@ nginx_server_tokens: "off"
 nginx_tcp_nopush: "on"
 
 nginx_extra_http_options: |
+  types_hash_max_size 2048;
+
+  log_format ltsv 'time:$time_local\t'
+                  'server:$server_name\t'
+                  'time_local:$msec\t'
+                  'request_uri:$request_uri\t'
+                  'status:$status\t'
+                  'referer:$http_referer\t'
+                  'user_agent:$http_user_agent';
+
   gzip on;
 
   proxy_read_timeout        120;
@@ -22,10 +32,10 @@ nginx_extra_http_options: |
   proxy_intercept_errors    on;
 
   proxy_set_header          Connection 'keep-alive';
-  proxy_set_header          X-Real-IP $remote_addr;
-  proxy_set_header          X-Scheme $scheme;
-  proxy_set_header          X-Forwarded-For $proxy_add_x_forwarded_for;
   proxy_set_header          Host $http_host;
+  proxy_set_header          X-Scheme $scheme;
+  proxy_set_header          X-Real-IP $remote_addr;
+  proxy_set_header          X-Forwarded-For $proxy_add_x_forwarded_for;
 
 nginx_upstreams:
   - name: object_backend
@@ -34,14 +44,24 @@ nginx_upstreams:
       "127.0.0.1:8888"
     }
 
+nginx_proxy_cache_path: /tmp/cheapcache keys_zone=cheapcache:20m
+
 nginx_remove_default_vhost: true
 nginx_vhosts:
   - listen: "[::]:80 ipv6only=off"
     server_name: "{{ domain_name }}"
     root: "/home/{{ username }}/object"
-    access_log: "/var/log/nginx/cheapcdn_error.log"
+    access_log: "/var/log/nginx/cheapcdn_error.log ltsv"
     error_log: "/var/log/nginx/cheapcdn_access.log"
     extra_parameters: |
+        proxy_cache cheapcache;
+        proxy_cache_valid 200 600s;
+        proxy_cache_lock on;
+
+        proxy_cache_lock_timeout 0s;
+        proxy_cache_lock_age 600s;
+        proxy_cache_use_stale updating;
+
         location / {
             proxy_pass http://object_backend;
         }
