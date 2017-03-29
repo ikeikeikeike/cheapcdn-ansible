@@ -17,8 +17,12 @@ nginx_extra_http_options: |
 
   log_format ltsv 'time:$time_local\t'
                   'server:$server_name\t'
+                  'remote_addr:$remote_addr\t'
+                  'x_forwarded_for:$http_x_forwarded_for\t'
                   'time_local:$msec\t'
                   'request_uri:$request_uri\t'
+                  'request:$request\t'
+                  'body_bytes_sent:$body_bytes_sent\t'
                   'status:$status\t'
                   'referer:$http_referer\t'
                   'user_agent:$http_user_agent';
@@ -54,29 +58,37 @@ nginx_vhosts:
     access_log: "/var/log/nginx/cheapcdn_error.log ltsv"
     error_log: "/var/log/nginx/cheapcdn_access.log"
     extra_parameters: |
-        proxy_cache cheapcache;
-        proxy_cache_lock on;
-
-        proxy_cache_lock_timeout 0s;
-        proxy_cache_lock_age 600s;
-        proxy_cache_use_stale updating;
-
-        slice              1m;
-        proxy_cache_key    $host$uri$is_args$args$slice_range;
-        proxy_set_header   Range $slice_range;
-        proxy_http_version 1.1;
-        proxy_cache_valid  200 206 1h;
+        error_page 418 = @updater;
 
         location / {
+            if ($request_method ~ ^(POST|PUT|DELETE)$ ) {
+                return 418;
+            }
+
+            proxy_cache cheapcache;
+            proxy_cache_lock on;
+
+            proxy_cache_lock_timeout 0s;
+            proxy_cache_lock_age 600s;
+            proxy_cache_use_stale updating;
+
+            slice               1m;
+            proxy_set_header    Range $slice_range;
+            proxy_cache_key     $host$uri$is_args$args$slice_range;
+            proxy_http_version  1.1;
+
+            add_header X-IKEDA "ikead";
+            add_header X-Cache "1234";
+
+            proxy_cache_valid   200 206 1h;
+
             proxy_pass http://object_backend;
         }
 
-        location = /ping {
-            empty_gif;
-            access_log off;
-            break;
+        location @updater {
+            proxy_hide_header Range;
+            proxy_pass http://object_backend;
         }
-
 
 # Minio
 #
