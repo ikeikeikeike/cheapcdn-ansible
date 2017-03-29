@@ -90,6 +90,13 @@ nginx_vhosts:
             proxy_pass http://object_backend;
         }
 
+        location = /ping {
+            empty_gif;
+            access_log off;
+            break;
+        }
+
+
 # Minio
 #
 minio_user: "{{ username }}"
