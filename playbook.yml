@@ -12,13 +12,6 @@
 
   strategy: free
 
-  #gather_facts: False
-  #pre_tasks:
-  #  - name: Install python for Ansible
-  #    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-  #    changed_when: False
-  #  - setup: # aka gather_facts
-
   roles:
     - { role: custom/common }
     - { role: custom/swapfile }
@@ -33,4 +26,5 @@
     - { role: custom/einhorn }                # Install einhorn with rbenv@ruby
     - { role: custom/elao.supervisor.custom } # Configure einhorn into superbisor
     - { role: galaxy/geerlingguy.nginx }      # Configure cheapcdn into nginx
-    - { role: custom/restart }                # Configure cheapcdn into nginx
+    - { role: custom/nginx }                  # Build with slice_module
+    - { role: custom/restart }                # Graceful restart einhorn

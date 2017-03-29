@@ -1,0 +1,20 @@
+---
+
+- name: pre-provisining for cheapcdn
+
+  vars_files:
+    - vars/secret.yml
+    - vars/main.yml
+
+  sudo: yes
+  hosts: production
+  # hosts: vagrant
+
+  strategy: free
+
+  gather_facts: False
+  pre_tasks:
+   - name: Install python for Ansible
+     raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal python-zipstream)
+     changed_when: False
+   - setup: # aka gather_facts

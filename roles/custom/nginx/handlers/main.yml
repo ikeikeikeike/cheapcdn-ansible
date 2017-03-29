@@ -1,0 +1,13 @@
+---
+- name: start nginx
+  service: name=nginx state=started
+
+- name: restart nginx
+  service: name=nginx state=restarted
+
+- name: validate nginx configuration
+  command: nginx -t -c /etc/nginx/nginx.conf
+  changed_when: False
+
+- name: reload nginx
+  service: name=nginx state=reloaded
