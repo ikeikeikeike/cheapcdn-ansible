@@ -1,3 +1,6 @@
 - name: graceful restart einhorn
   command: "/home/{{ username }}/.rbenv/shims/einhornsh -d {{ cheapcdn.sock }} -e upgrade"
   sudo_user: "{{ username }}"
+
+- name: reload nginx
+  command: systemctl reload nginx

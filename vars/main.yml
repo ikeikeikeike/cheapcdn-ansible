@@ -77,9 +77,6 @@ nginx_vhosts:
             proxy_cache_key     $host$uri$is_args$args$slice_range;
             proxy_http_version  1.1;
 
-            add_header X-IKEDA "ikead";
-            add_header X-Cache "1234";
-
             proxy_cache_valid   200 206 1h;
 
             proxy_pass http://object_backend;
