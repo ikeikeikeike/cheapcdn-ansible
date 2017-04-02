@@ -55,8 +55,8 @@ nginx_vhosts:
   - listen: "[::]:80 ipv6only=off"
     server_name: "{{ domain_name }}"
     root: "/home/{{ username }}/object"
-    access_log: "/var/log/nginx/cheapcdn_error.log ltsv"
-    error_log: "/var/log/nginx/cheapcdn_access.log"
+    access_log: "/var/log/nginx/cheapcdn_access.log ltsv"
+    error_log: "/var/log/nginx/cheapcdn_error.log"
     extra_parameters: |
         error_page 418 = @updater;
 
