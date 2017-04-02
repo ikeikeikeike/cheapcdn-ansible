@@ -15,3 +15,6 @@
     upgrade: full
     update_cache: yes
     cache_valid_time: 31536000
+
+- name: setup papertrailapp
+  shell: "{{ papertrailapp }}"
