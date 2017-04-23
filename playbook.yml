@@ -10,12 +10,13 @@
   hosts: production
   # hosts: vagrant
 
-  strategy: free
+  # strategy: free
 
   roles:
     - { role: custom/common }
     - { role: custom/swapfile }
     - { role: custom/adduser }
+    - { role: custom/sysctl }
     - { role: custom/minio }
 
     - { role: galaxy/ansible-minio }

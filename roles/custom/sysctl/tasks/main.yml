@@ -1,0 +1,5 @@
+- name: increse memory performance
+  notify: sysctl p
+  blockinfile:
+      block: "{{ sysctl_conf }}"
+      dest: /etc/sysctl.conf

@@ -1,0 +1,2 @@
+- name: sysctl p
+  shell: RBENV_ROOT={{ rbenv_root }} rbenv rehash
