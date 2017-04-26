@@ -28,10 +28,10 @@
       shell: pkill minio
       ignore_errors: yes
 
-    - name: stop minio
-      shell: systemctl stop minio
-    - name: stop minio
-      shell: systemctl stop minio
+    # - name: stop minio
+      # shell: systemctl stop minio
+    # - name: stop minio
+      # shell: systemctl stop minio
     - name: stop minio
       shell: systemctl stop minio
 

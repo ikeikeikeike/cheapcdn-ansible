@@ -54,7 +54,7 @@ nginx_remove_default_vhost: true
 nginx_vhosts:
   - listen: "[::]:80 ipv6only=off"
     server_name: "{{ domain_name }}"
-    root: "/home/{{ username }}/object"
+    # root: "/home/{{ username }}/object"
     access_log: "/var/log/nginx/cheapcdn_access.log ltsv"
     error_log: "/var/log/nginx/cheapcdn_error.log"
     extra_parameters: |
@@ -111,7 +111,7 @@ minio_server_datadirs:
   # - "http://{{ hostvars['prd-object3']['ansible_eth1']['ipv4']['address'] }}/mnt/object3"
   # - "http://{{ hostvars['prd-object4']['ansible_eth1']['ipv4']['address'] }}/mnt/object4"
   # - "http://{{ hostvars['prd-object5']['ansible_eth1']['ipv4']['address'] }}/mnt/object5"
-  - "/mnt/object2"
+  - "/mnt/{{ inventory_hostname }}"
 
 # Swapfile
 #
@@ -161,6 +161,7 @@ elao_supervisor_configs:
                              -src  http://127.0.0.1:8888
                              -dest http://127.0.0.1:9091
                                 http://{{ domain_name }}
+                                http://nina.{{ domain_name }}
 
         directory=/home/{{ username }}/go/src/github.com/ikeikeikeike/cheapcdn
 
