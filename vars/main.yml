@@ -3,7 +3,7 @@
 nginx_worker_processes: "auto"
 nginx_worker_connections: 10240
 nginx_multi_accept: "on"
-nginx_client_max_body_size: "1024M"
+nginx_client_max_body_size: "5120M"
 # nginx_accept_mutex_delay: "100ms"
 
 nginx_extra_conf_options: |
@@ -145,6 +145,8 @@ cheapcdn:
 
 # Supervisor
 #
+# http://nina.{{ domain_name }}
+#
 elao_supervisor_configs:
   - file:     cheapcdn.conf
     template: configs/program_prod.conf.j2
@@ -161,7 +163,6 @@ elao_supervisor_configs:
                              -src  http://127.0.0.1:8888
                              -dest http://127.0.0.1:9091
                                 http://{{ domain_name }}
-                                http://nina.{{ domain_name }}
 
         directory=/home/{{ username }}/go/src/github.com/ikeikeikeike/cheapcdn
 
