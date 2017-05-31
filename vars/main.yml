@@ -52,10 +52,10 @@ nginx_proxy_cache_path: /tmp/cheapcache keys_zone=cheapcache:20m
 
 nginx_remove_default_vhost: true
 nginx_vhosts:
-  - listen: "[::]:80 ipv6only=off"
+  - listen: "80; listen [::]:80"
     server_name: "{{ domain_name }}"
     # root: "/home/{{ username }}/object"
-    access_log: "/var/log/nginx/cheapcdn_access.log ltsv"
+    access_log: "/var/log/nginx/cheapcdn_access.log"
     error_log: "/var/log/nginx/cheapcdn_error.log"
     extra_parameters: |
         error_page 418 = @updater;
@@ -122,9 +122,9 @@ swap_file_size_gb: 1
 
 # Golang
 #
-go_tarball: "go1.8.1.linux-amd64.tar.gz"
-go_tarball_checksum: "sha256:a579ab19d5237e263254f1eac5352efcf1d70b9dacadb6d6bb12b0911ede8994"
-go_version_target: "go version go1.8.1 linux/amd64"
+go_tarball: "go1.8.3.linux-amd64.tar.gz"
+go_tarball_checksum: "sha256:1862f4c3d3907e59b04a757cfda0ea7aa9ef39274af99a784f5be843c80c6772"
+go_version_target: "go version go1.8.3 linux/amd64"
 
 
 
@@ -141,6 +141,7 @@ rbenv_users:
   - "{{ username }}"
 
 cheapcdn:
+  pid: /tmp/einhorn.pid
   sock: /tmp/einhorn.sock
 
 # Supervisor
@@ -154,15 +155,13 @@ elao_supervisor_configs:
         [program:cheapcdn]
         command=/home/{{ username }}/.rbenv/shims/einhorn
                     -b 127.0.0.1:8888
-                    -e /tmp/einhorn.pid
-                    -d /tmp/einhorn.sock
+                    -e {{ cheapcdn.pid }}
+                    -d {{ cheapcdn.sock }}
                         -- ./cheapcdn
                              -user {{ cheapcdn_user }}
                              -pass {{ cheapcdn_pass }}
                              -salt {{ cheapcdn_salt }}
                              -src  http://127.0.0.1:8888
-                             -dest http://127.0.0.1:9091
-                                http://{{ domain_name }}
 
         directory=/home/{{ username }}/go/src/github.com/ikeikeikeike/cheapcdn
 
@@ -176,5 +175,57 @@ elao_supervisor_configs:
 
         redirect_stderr=true
         stdout_logfile=/var/log/supervisor/cheapcdn.log
+        stdout_logfile_maxbytes=50MB
+        stdout_logfile_backups=10
+
+  - file:     gunicorn.conf
+    template: configs/program_prod.conf.j2
+    config: |
+        [program:gunicorn]
+        command=/home/{{ username }}/venv/bin/gunicorn
+                    --worker-class gevent
+                    --env DJANGO_SETTINGS_MODULE=scraper.settings_production
+                        scraper.wsgi
+
+        directory=/home/{{ username }}/panglao-scraper/scraper
+
+        user={{ username }}
+
+        autostart=true
+        autorestart=true
+
+        startsecs=5
+        startretries=10
+
+        redirect_stderr=true
+        stdout_logfile=/var/log/supervisor/gunicorn.log
+        stdout_logfile_maxbytes=50MB
+        stdout_logfile_backups=10
+
+  - file:     celery.conf
+    template: configs/program_prod.conf.j2
+    config: |
+        [program:celery]
+        environment=DJANGO_SETTINGS_MODULE=scraper.settings_production
+
+        command=/home/{{ username }}/venv/bin/celery
+                    -n worker@sharecdn.net
+                    -A scraper worker
+                    -l info
+                    -P gevent
+                    -c 100
+
+        directory=/home/{{ username }}/panglao-scraper/scraper
+
+        user={{ username }}
+
+        autostart=true
+        autorestart=true
+
+        startsecs=5
+        startretries=10
+
+        redirect_stderr=true
+        stdout_logfile=/var/log/supervisor/celery.log
         stdout_logfile_maxbytes=50MB
         stdout_logfile_backups=10

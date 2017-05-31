@@ -2,5 +2,11 @@
   command: "/home/{{ username }}/.rbenv/shims/einhornsh -d {{ cheapcdn.sock }} -e upgrade"
   sudo_user: "{{ username }}"
 
+- name: graceful reload gunicorn
+  command: "/usr/bin/supervisorctl signal HUP gunicorn"
+
+- name: graceful restart celery
+  command: "/usr/bin/supervisorctl signal HUP celery"
+
 - name: reload nginx
   command: systemctl reload nginx

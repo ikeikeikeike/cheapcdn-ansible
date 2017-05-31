@@ -1,0 +1,22 @@
+- name: Added Python 3.6 ppa
+  apt_repository:
+    repo: 'ppa:jonathonf/python-3.6'
+
+- name: Install Python
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - python3.6
+    - python3.6-dev
+    - python3.6-venv
+    - postgresql-client
+    - libpq-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - redis-tools
+    - redis-server
+
+- name: make venv
+  shell: cd /home/{{ username }} && /usr/bin/python3.6 -m venv venv
+  sudo_user: "{{ username }}"
+  ignore_errors: True

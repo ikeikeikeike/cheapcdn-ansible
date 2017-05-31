@@ -1,0 +1,21 @@
+- name: git clone from ikeikeikeike/panglao-scraper.git
+  sudo_user: "{{ username }}"
+  git:
+    repo: git@github.com:ikeikeikeike/panglao-scraper.git
+    dest: "/home/{{ username }}/panglao-scraper"
+    version: master
+    update: yes
+    accept_hostkey: yes
+
+- name: setup install
+  sudo_user: "{{ username }}"
+  shell: |
+    cd /home/{{ username }}/panglao-scraper &&
+    /home/{{ username }}/venv/bin/python setup.py install
+
+- name: migrate cheapcdn
+  sudo_user: "{{ username }}"
+  shell: |
+    cd /home/{{ username }}/panglao-scraper/scraper &&
+    DJANGO_SETTINGS_MODULE=scraper.settings_production /home/{{ username }}/venv/bin/python manage.py migrate &&
+    DJANGO_SETTINGS_MODULE=scraper.settings_production /home/{{ username }}/venv/bin/python manage.py migrate cheapcdn --database=cheapcdn

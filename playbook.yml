@@ -18,12 +18,14 @@
     - { role: custom/adduser }
     - { role: custom/sysctl }
     - { role: custom/minio }
+    - { role: custom/python }
 
     - { role: galaxy/ansible-minio }
     - { role: galaxy/joshualund.golang }
     - { role: galaxy/zzet.rbenv }
 
     - { role: custom/elao.supervisor.custom } # Configure einhorn into superbisor
+    - { role: custom/scraper }                # Install scraper
     - { role: custom/cheapcdn }               # Install cheapcdn with golang
     - { role: custom/einhorn }                # Install einhorn with rbenv@ruby
     - { role: galaxy/geerlingguy.nginx }      # Configure cheapcdn into nginx

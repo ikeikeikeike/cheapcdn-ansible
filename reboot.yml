@@ -1,0 +1,17 @@
+---
+
+- name: Reboot
+
+  vars_files:
+    - vars/secret.yml
+    - vars/main.yml
+
+  sudo: yes
+  # hosts: production
+  hosts: vagrant
+
+  strategy: free
+
+  tasks:
+    - name: reboot
+      shell: reboot
