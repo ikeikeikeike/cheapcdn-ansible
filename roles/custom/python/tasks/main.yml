@@ -9,12 +9,6 @@
     - python3.6
     - python3.6-dev
     - python3.6-venv
-    - postgresql-client
-    - libpq-dev
-    - libxml2-dev
-    - libxslt1-dev
-    - redis-tools
-    - redis-server
 
 - name: make venv
   shell: cd /home/{{ username }} && /usr/bin/python3.6 -m venv venv
