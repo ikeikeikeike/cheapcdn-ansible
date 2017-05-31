@@ -161,6 +161,7 @@ elao_supervisor_configs:
                              -user {{ cheapcdn_user }}
                              -pass {{ cheapcdn_pass }}
                              -salt {{ cheapcdn_salt }}
+                             -dsn  {{ cheapcdn_dsn }}
                              -src  http://127.0.0.1:8888
 
         directory=/home/{{ username }}/go/src/github.com/ikeikeikeike/cheapcdn
