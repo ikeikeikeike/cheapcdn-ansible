@@ -47,6 +47,11 @@ nginx_upstreams:
     servers: {
       "127.0.0.1:8888"
     }
+  - name: scraper_backend
+    keepalive: 64
+    servers: {
+      "server 127.0.0.1:8000"
+    }
 
 nginx_proxy_cache_path: /tmp/cheapcache keys_zone=cheapcache:20m
 
@@ -58,7 +63,18 @@ nginx_vhosts:
     access_log: "/var/log/nginx/cheapcdn_access.log"
     error_log: "/var/log/nginx/cheapcdn_error.log"
     extra_parameters: |
-        error_page 418 = @updater;
+        location /api/info {
+            proxy_pass http://scraper_backend;
+        }
+        location /api/progress {
+            proxy_pass http://scraper_backend;
+        }
+        location /api/download {
+            proxy_pass http://scraper_backend;
+        }
+        location /api/removefile {
+            proxy_pass http://scraper_backend;
+        }
 
         location / {
             if ($request_method ~ ^(POST|PUT|DELETE)$ ) {
@@ -81,6 +97,8 @@ nginx_vhosts:
 
             proxy_pass http://object_backend;
         }
+
+        error_page 418 = @updater;
 
         location @updater {
             proxy_hide_header Range;
