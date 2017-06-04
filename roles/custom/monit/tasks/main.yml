@@ -6,9 +6,9 @@
 
 # Configurations
 
-- name: Create monitering file for nginx. /etc/monit/conf.d/nginx
-  template: src=nginx.j2 dest=/etc/monit/conf.d/nginx
-  notify: restart monit
+# - name: Create monitering file for nginx. /etc/monit/conf.d/nginx
+  # template: src=nginx.j2 dest=/etc/monit/conf.d/nginx
+  # notify: restart monit
 
 - name: gunicorn
   template: src=gunicorn.j2 dest=/etc/monit/conf.d/gunicorn
