@@ -159,8 +159,8 @@ rbenv_users:
   - "{{ username }}"
 
 cheapcdn:
-  pid: /tmp/einhorn.pid
-  sock: /tmp/einhorn.sock
+  pid: /home/{{ username }}/einhorn.pid
+  sock: /home/{{ username }}/einhorn.sock
 
 # Supervisor
 #
@@ -171,6 +171,8 @@ elao_supervisor_configs:
     template: configs/program_prod.conf.j2
     config: |
         [program:cheapcdn]
+        environment=LC_ALL=en_US.UTF-8
+
         command=/home/{{ username }}/.rbenv/shims/einhorn
                     -b 127.0.0.1:8888
                     -e {{ cheapcdn.pid }}
@@ -201,6 +203,8 @@ elao_supervisor_configs:
     template: configs/program_prod.conf.j2
     config: |
         [program:gunicorn]
+        environment=LC_ALL=en_US.UTF-8
+
         command=/home/{{ username }}/venv/bin/gunicorn
                     --worker-class gevent
                     --env DJANGO_SETTINGS_MODULE=scraper.settings_production
@@ -225,7 +229,8 @@ elao_supervisor_configs:
     template: configs/program_prod.conf.j2
     config: |
         [program:celery]
-        environment=DJANGO_SETTINGS_MODULE=scraper.settings_production
+        environment=LC_ALL=en_US.UTF-8,
+                    DJANGO_SETTINGS_MODULE=scraper.settings_production
 
         command=/home/{{ username }}/venv/bin/celery
                     -n worker@cheapcdn.net
