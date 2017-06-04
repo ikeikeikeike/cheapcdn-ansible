@@ -1,0 +1,5 @@
+check process gunicorn matching "/bin/gunicorn"
+    start program = "/usr/bin/supervisorctl start gunicorn"
+    stop  program = "/usr/bin/supervisorctl stop gunicorn"
+    if failed port 8000 protocol http request /ping then restart
+    if 5 restarts within 5 cycles then timeout

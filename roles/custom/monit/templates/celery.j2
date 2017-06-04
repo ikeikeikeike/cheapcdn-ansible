@@ -1,0 +1,4 @@
+check process celery matching "/bin/celery"
+    start program = "/usr/bin/supervisorctl start celery"
+    stop  program = "/usr/bin/supervisorctl stop celery"
+    if 5 restarts within 5 cycles then timeout

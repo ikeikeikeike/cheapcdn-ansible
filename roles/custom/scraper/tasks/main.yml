@@ -25,9 +25,42 @@
     cd /home/{{ username }}/panglao-scraper &&
     /home/{{ username }}/venv/bin/python setup.py install
 
+- file: path=/home/{{ username }}/panglao-scraper/scraper/scraper/settings_production.py state=touch owner={{ username }} group={{ username }} mode=0555
+- name: Configure settings_production.py
+  sudo_user: "{{ username }}"
+  blockinfile:
+    dest: /home/{{ username }}/panglao-scraper/scraper/scraper/settings_production.py
+    insertafter: EOF
+    content: |
+        {{ scraper_settings }}
+
+- name: migrate cheapcdn local db
+  sudo_user: "{{ username }}"
+  shell: |
+    cd /home/{{ username }}/panglao-scraper/scraper &&
+    DJANGO_SETTINGS_MODULE=scraper.settings_production /home/{{ username }}/venv/bin/python manage.py migrate
+
 - name: migrate cheapcdn
   sudo_user: "{{ username }}"
   shell: |
     cd /home/{{ username }}/panglao-scraper/scraper &&
-    DJANGO_SETTINGS_MODULE=scraper.settings_production /home/{{ username }}/venv/bin/python manage.py migrate &&
     DJANGO_SETTINGS_MODULE=scraper.settings_production /home/{{ username }}/venv/bin/python manage.py migrate cheapcdn --database=cheapcdn
+  when: inventory_hostname == "object2"
+
+- file: path=/home/{{ username }}/update_youtube_dl.sh state=touch owner={{ username }} group={{ username }} mode=0755
+- name: Configure update_youtube_dl.sh
+  sudo_user: "{{ username }}"
+  blockinfile:
+    dest: /home/{{ username }}/update_youtube_dl.sh
+    insertafter: EOF
+    content: |
+        {{ update_youtube_dl }}
+
+- name: update update_youtube_dl
+  cron:
+    name: update update_youtube_dl
+    user: "{{ username }}"
+    minute: 30
+    hour: 12
+    day: "*/3"
+    job: "sh /home/{{ username }}/update_youtube_dl.sh >> /tmp/batch.log 2>&1"

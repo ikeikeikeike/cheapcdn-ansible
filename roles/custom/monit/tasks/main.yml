@@ -1,0 +1,61 @@
+- name: apt-get install monit
+  apt: name=monit
+
+- name: start monit service
+  service: name=monit state=started enabled=yes
+
+# Configurations
+
+- name: Create monitering file for nginx. /etc/monit/conf.d/nginx
+  template: src=nginx.j2 dest=/etc/monit/conf.d/nginx
+  notify: restart monit
+
+- name: gunicorn
+  template: src=gunicorn.j2 dest=/etc/monit/conf.d/gunicorn
+  notify: restart monit
+
+- name: celery
+  template: src=celery.j2 dest=/etc/monit/conf.d/celery
+  notify: restart monit
+
+- name: einhorn
+  template: src=einhorn.j2 dest=/etc/monit/conf.d/einhorn
+  notify: restart monit
+
+# - name: minio
+  # template: src=minio.j2 dest=/etc/monit/conf.d/minio
+  # notify: restart monit
+
+- name: replace /etc/monit/monitrc
+  lineinfile: dest=/etc/monit/monitrc
+              regexp='^  set daemon 120'
+              line='  set daemon 20'
+              backrefs=yes
+  notify: restart monit
+
+- name: replace /etc/monit/monitrc
+  lineinfile: dest=/etc/monit/monitrc
+              regexp='^# set httpd port 2812 and'
+              line='set httpd port 2812 and'
+              backrefs=yes
+  notify: restart monit
+
+- name: replace /etc/monit/monitrc
+  lineinfile: dest=/etc/monit/monitrc
+              regexp='^#     use address localhost'
+              line='     use address localhost'
+              backrefs=yes
+  notify: restart monit
+
+- name: replace /etc/monit/monitrc
+  lineinfile: dest=/etc/monit/monitrc
+              regexp='^#     allow localhost'
+              line='     allow localhost'
+              backrefs=yes
+  notify: restart monit
+
+- name: update monit process
+  cron:
+    name: update monit process
+    minute: "*/20"
+    job: "/usr/bin/monit monitor all"

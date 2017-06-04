@@ -30,4 +30,5 @@
     - { role: custom/einhorn }                # Install einhorn with rbenv@ruby
     - { role: galaxy/geerlingguy.nginx }      # Configure cheapcdn into nginx
     - { role: custom/nginx }                  # Build with slice_module
+    - { role: custom/monit }                  # Configure monit
     - { role: custom/restart }                # Graceful restart einhorn

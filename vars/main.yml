@@ -232,7 +232,7 @@ elao_supervisor_configs:
                     -A scraper worker
                     -l info
                     -P gevent
-                    -c 10
+                    -c 30
 
         directory=/home/{{ username }}/panglao-scraper/scraper
 

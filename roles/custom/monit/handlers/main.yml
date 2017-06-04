@@ -1,0 +1,10 @@
+# file: monit/handlers/main.yml
+---
+
+- name: restart monit
+  service: name=monit state=restarted
+  sudo: yes
+
+- name: reload monit
+  service: name=monit state=reloaded
+  sudo: yes
