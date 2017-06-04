@@ -50,7 +50,7 @@ nginx_upstreams:
   - name: scraper_backend
     keepalive: 64
     servers: {
-      "server 127.0.0.1:8000"
+      "127.0.0.1:8000"
     }
 
 nginx_proxy_cache_path: /tmp/cheapcache keys_zone=cheapcache:20m
@@ -228,11 +228,11 @@ elao_supervisor_configs:
         environment=DJANGO_SETTINGS_MODULE=scraper.settings_production
 
         command=/home/{{ username }}/venv/bin/celery
-                    -n worker@sharecdn.net
+                    -n worker@cheapcdn.net
                     -A scraper worker
                     -l info
                     -P gevent
-                    -c 100
+                    -c 10
 
         directory=/home/{{ username }}/panglao-scraper/scraper
 
