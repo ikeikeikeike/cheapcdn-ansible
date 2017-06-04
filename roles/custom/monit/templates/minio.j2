@@ -1,5 +1,4 @@
 check process minio matching "/bin/minio server"
     start program = "/bin/systemctl start minio"
     stop  program = "/bin/systemctl stop minio"
-    if failed port 9091 protocol http request / then restart
     if 5 restarts within 5 cycles then timeout

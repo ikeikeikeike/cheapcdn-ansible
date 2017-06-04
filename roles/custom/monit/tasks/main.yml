@@ -22,9 +22,9 @@
   template: src=einhorn.j2 dest=/etc/monit/conf.d/einhorn
   notify: restart monit
 
-# - name: minio
-  # template: src=minio.j2 dest=/etc/monit/conf.d/minio
-  # notify: restart monit
+- name: minio
+  template: src=minio.j2 dest=/etc/monit/conf.d/minio
+  notify: restart monit
 
 - name: replace /etc/monit/monitrc
   lineinfile: dest=/etc/monit/monitrc

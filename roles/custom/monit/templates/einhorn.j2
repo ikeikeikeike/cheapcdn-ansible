@@ -1,5 +1,4 @@
-check process einhorn with pidfile "/tmp/einhorn.pid"
-    start program = "/usr/bin/supervisorctl start einhorn"
-    stop  program = "/usr/bin/supervisorctl stop einhorn"
-    if failed port 8888 protocol http request /ping then restart
+check process einhorn matching "einhorn"
+    start program = "/usr/bin/supervisorctl start cheapcdn"
+    stop  program = "/usr/bin/supervisorctl stop cheapcdn"
     if 5 restarts within 5 cycles then timeout
