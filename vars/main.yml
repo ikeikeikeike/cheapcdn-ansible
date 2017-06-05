@@ -72,6 +72,9 @@ nginx_vhosts:
         location /api/download {
             proxy_pass http://scraper_backend;
         }
+        location /api/findfile {
+            proxy_pass http://scraper_backend;
+        }
         location /api/removefile {
             proxy_pass http://scraper_backend;
         }
