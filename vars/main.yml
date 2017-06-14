@@ -79,6 +79,9 @@ nginx_vhosts:
             proxy_pass http://scraper_backend;
         }
 
+        location /gateway/ {
+            proxy_pass http://object_backend;
+        }
         location / {
             if ($request_method ~ ^(POST|PUT|DELETE)$ ) {
                 return 418;
