@@ -6,3 +6,4 @@
 /.vagrant
 /ubuntu-*
 /restart-*.yml
+/hosts
