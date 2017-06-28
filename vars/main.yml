@@ -94,7 +94,7 @@ nginx_vhosts:
             proxy_cache_lock_age 600s;
             proxy_cache_use_stale updating;
 
-            slice               1m;
+            slice               3m;
             proxy_set_header    Range $slice_range;
             proxy_cache_key     $host$uri$is_args$args$slice_range;
             proxy_http_version  1.1;
