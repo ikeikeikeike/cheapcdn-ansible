@@ -30,8 +30,10 @@
   notify: restart nginx
 
 - name: Make install nginx into /usr/share
-  shell: cd /root/work/nginx/1.11.12/nginx-1.11.12 &&
-         make install &&
-         rm -f /usr/sbin/nginx && ln -fs /usr/share/nginx/sbin/nginx /usr/sbin/nginx
+  shell: cd /root/work/nginx/1.11.12/nginx-1.11.12 && make install
   when: has_nginx.stat.exists == False
+  notify: restart nginx
+
+- name: Replace install nginx into /usr/share
+  shell: rm -f /usr/sbin/nginx && ln -fs /usr/share/nginx/sbin/nginx /usr/sbin/nginx
   notify: restart nginx
