@@ -69,6 +69,9 @@ nginx_vhosts:
         location /api/nodeinfo {
             proxy_pass http://scraper_backend;
         }
+        location /api/abledisk {
+            proxy_pass http://scraper_backend;
+        }
         location /api/progress {
             proxy_pass http://scraper_backend;
         }
