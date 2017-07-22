@@ -20,6 +20,8 @@
     - { role: custom/minio }
     - { role: custom/python }
 
+    - { role: custom/prepare }                # Prepared for all of below
+
     - { role: galaxy/ansible-minio }
     - { role: galaxy/joshualund.golang }
     - { role: galaxy/zzet.rbenv }

@@ -1,11 +1,3 @@
-- name: nginx location proxy file directory
-  file:
-    path: "/mnt/{{ inventory_hostname }}/tmp"
-    state: directory
-    owner: root
-    group: root
-    mode: 0777
-
 - name: Install relevent module form apt
   apt:
     name: "{{ item }}"
