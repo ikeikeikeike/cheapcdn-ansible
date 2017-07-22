@@ -11,3 +11,9 @@
     recurse: yes
     owner: "{{ username }}"
     group: "{{ username }}"
+
+- name: remove old files on cron
+  cron:
+    name: remove old files on cron
+    minute: "*/20"
+    job: "/usr/bin/find /mnt/{{ inventory_hostname }}/openshare -maxdepth 1 -type f -user {{ username }} -mtime +10 -exec rm {} \\;"
