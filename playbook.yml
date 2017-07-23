@@ -8,6 +8,7 @@
 
   sudo: yes
   hosts: production
+  # hosts: logger
   # hosts: vagrant
 
   # strategy: free
@@ -19,6 +20,7 @@
     - { role: custom/sysctl }
     - { role: custom/minio }
     - { role: custom/python }
+    - { role: custom/logger }                 # Send rsyslog
 
     - { role: custom/prepare }                # Prepared for all of below
 

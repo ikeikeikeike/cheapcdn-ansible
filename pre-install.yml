@@ -8,6 +8,7 @@
 
   sudo: yes
   hosts: production
+  # hosts: logger
   # hosts: vagrant
 
   strategy: free
