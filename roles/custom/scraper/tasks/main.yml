@@ -56,7 +56,17 @@
     content: |
         {{ update_youtube_dl }}
 
-- name: update update_youtube_dl
+
+- name: set diskfree command into cron
+  cron:
+    name: set diskfree command into cron
+    user: "{{ username }}"
+    minute: "*/3"
+    job: "cd /home/{{ username }}/panglao-scraper/scraper &&
+            DJANGO_SETTINGS_MODULE=scraper.settings_production
+              /home/{{ username }}/venv/bin/python manage.py diskfree >> /tmp/diskfree.log 2>&1"
+
+- name: update update_youtube_dl into cron
   cron:
     name: update update_youtube_dl
     user: "{{ username }}"
@@ -65,7 +75,7 @@
     day: "*/3"
     job: "sh /home/{{ username }}/update_youtube_dl.sh >> /tmp/batch.log 2>&1"
 
-- name: clean weste
+- name: clean weste into cron
   cron:
     name: clean weste
     minute: "*/10"
