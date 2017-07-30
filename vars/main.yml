@@ -202,7 +202,8 @@ elao_supervisor_configs:
     template: configs/program_prod.conf.j2
     config: |
         [program:gunicorn]
-        environment=LC_ALL=en_US.UTF-8
+        environment=LC_ALL=en_US.UTF-8,
+                    PATH=/home/cheap/venv/bin:%(ENV_PATH)s
 
         command=/home/{{ username }}/venv/bin/gunicorn
                     --worker-class gevent
