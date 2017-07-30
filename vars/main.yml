@@ -63,27 +63,14 @@ nginx_vhosts:
     access_log: "/var/log/nginx/cheapcdn_access.log"
     error_log: "/var/log/nginx/cheapcdn_error.log"
     extra_parameters: |
-        location /api/info {
-            proxy_pass http://scraper_backend;
-        }
-        location /api/nodeinfo {
-            proxy_pass http://scraper_backend;
-        }
-        location /api/abledisk {
-            proxy_pass http://scraper_backend;
-        }
-        location /api/progress {
-            proxy_pass http://scraper_backend;
-        }
-        location /api/download {
-            proxy_pass http://scraper_backend;
-        }
-        location /api/findfile {
-            proxy_pass http://scraper_backend;
-        }
-        location /api/removefile {
-            proxy_pass http://scraper_backend;
-        }
+        location /api/info       { proxy_pass http://scraper_backend; }
+        location /api/nodeinfo   { proxy_pass http://scraper_backend; }
+        location /api/abledisk   { proxy_pass http://scraper_backend; }
+        location /api/progress   { proxy_pass http://scraper_backend; }
+        location /api/download   { proxy_pass http://scraper_backend; }
+        location /api/findfile   { proxy_pass http://scraper_backend; }
+        location /api/removefile { proxy_pass http://scraper_backend; }
+        location /api/extractors { proxy_pass http://scraper_backend; }
 
         location /gateway/ {
             proxy_pass http://object_backend;

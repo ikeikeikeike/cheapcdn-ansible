@@ -1,8 +1,8 @@
 - name: setup digialocean agent
   shell: curl -sSL https://agent.digitalocean.com/install.sh | sh
 
-- name: setup papertrailapp
-  shell: "{{ papertrailapp }}"
+# - name: setup papertrailapp
+  # shell: "{{ papertrailapp }}"
 
-- name: setup uptimerobot
-  shell: "{{ uptimerobot }}"
+# - name: setup uptimerobot
+  # shell: "{{ uptimerobot }}"
