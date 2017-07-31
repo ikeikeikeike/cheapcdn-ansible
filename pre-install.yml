@@ -19,10 +19,3 @@
      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal python-zipstream)
      changed_when: False
    - setup: # aka gather_facts
-
-   - name: digialocean agent
-     shell: curl -sSL https://agent.digitalocean.com/install.sh | sh
-
-   # - name: Configure update_youtube_dl.sh
-     # sudo_user: "{{ username }}"
-     # shell: "cd /home/{{ username }} && /home/{{ username }}/update_youtube_dl.sh"

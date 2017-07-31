@@ -35,4 +35,5 @@
     - { role: galaxy/geerlingguy.nginx }      # Configure cheapcdn into nginx
     - { role: custom/nginx }                  # Build with slice_module
     - { role: custom/monit }                  # Configure monit
+    - { role: custom/monitor }                # Configure external monitor
     - { role: custom/restart }                # Graceful restart einhorn
