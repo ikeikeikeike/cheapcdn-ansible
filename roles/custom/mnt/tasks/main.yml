@@ -1,0 +1,17 @@
+- name: Install ntp
+  apt: pkg={{ item }}
+  with_items:
+    - ntp  # workaround: https://github.com/minio/minio/issues/3446#issuecomment-267011376
+
+- name: Change permission mino directory
+  file: "path=/mnt mode=0775 state=directory owner={{ username }} group={{ username }}"
+- name: Change permission mnt directory
+  file: "path=/mnt/{{ inventory_hostname }} mode=0775 state=directory owner={{ username }} group={{ username }}"
+- name: nginx location proxy file directory
+  file: "path=/mnt/{{ inventory_hostname }}/tmp mode=0777 state=directory owner=root group=root"
+
+- name: remove old files on cron
+  cron:
+    name: remove old files on cron
+    minute: "*/20"
+    job: "/usr/bin/find /mnt/{{ inventory_hostname }}/openshare -maxdepth 1 -type f -user {{ username }} -mtime +{{ cheapcdn.expires }} -exec rm {} \\;"

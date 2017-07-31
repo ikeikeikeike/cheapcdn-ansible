@@ -1,8 +1,1 @@
-- name: nginx location proxy file directory
-  file:
-    path: "/mnt/{{ inventory_hostname }}/tmp"
-    state: directory
-    owner: root
-    group: root
-    recurse: yes
-    mode: 0777
+
