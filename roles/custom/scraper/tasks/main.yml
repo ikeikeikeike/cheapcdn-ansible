@@ -61,7 +61,7 @@
   cron:
     name: set diskfree command into cron
     user: "{{ username }}"
-    minute: "*/3"
+    minute: "*/5"
     job: "cd /home/{{ username }}/panglao-scraper/scraper &&
             DJANGO_SETTINGS_MODULE=scraper.settings_production
               /home/{{ username }}/venv/bin/python manage.py diskfree >> /tmp/diskfree.log 2>&1"

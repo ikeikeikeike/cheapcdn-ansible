@@ -133,7 +133,7 @@ minio_server_datadirs:
 # Swapfile
 #
 swap_file_path: /swapfile
-swap_file_size_gb: 1
+swap_file_size_gb: 2
 
 
 
