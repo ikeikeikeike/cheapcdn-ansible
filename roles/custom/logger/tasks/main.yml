@@ -6,3 +6,11 @@
     insertafter: EOF
     content: |
         {{ logger_content }}
+
+- name: force logrotate
+  cron:
+    name: force logrotate
+    minute: 15
+    hour: "*/2"
+    day: "*"
+    job: "/usr/sbin/logrotate -f /etc/logrotate.conf"
