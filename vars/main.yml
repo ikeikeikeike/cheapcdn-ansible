@@ -160,7 +160,7 @@ rbenv_users:
 cheapcdn:
   pid: /home/{{ username }}/einhorn.pid
   sock: /home/{{ username }}/einhorn.sock
-  expires: 5  # days
+  expires: 3  # days
 
 # Supervisor
 #

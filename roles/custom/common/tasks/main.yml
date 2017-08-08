@@ -10,6 +10,8 @@
     - git-core
     - build-essential
     - sshguard
+    - vnstat
+    - dstat
 
 - apt:
     upgrade: full
