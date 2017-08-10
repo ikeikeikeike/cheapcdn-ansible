@@ -15,3 +15,9 @@
     name: remove old files on cron
     minute: "*/20"
     job: "/usr/bin/find /mnt/{{ inventory_hostname }}/openshare -maxdepth 1 -type f -user {{ username }} -mtime +{{ cheapcdn.expires }} -exec rm {} \\;"
+
+- name: remove nginx waste files by cron
+  cron:
+    name: remove nginx waste files by cron
+    minute: "*/40"
+    job: "/usr/bin/find /mnt/{{ inventory_hostname }}/tmp/cheapcache -maxdepth 1 -type f -user www-data -mmin +600 -exec rm {} \\;"
