@@ -79,4 +79,4 @@
   cron:
     name: clean weste
     minute: "*/10"
-    job: "/usr/bin/find /tmp -maxdepth 1 -type f -user {{ username }} -mmin +350 -exec rm {} \\;"
+    job: "/usr/bin/find /tmp -maxdepth 1 -type f -user {{ username }} -mmin +240 -exec rm {} \\;"

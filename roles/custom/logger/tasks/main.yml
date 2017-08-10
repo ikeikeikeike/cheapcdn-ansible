@@ -14,3 +14,22 @@
     hour: "*/2"
     day: "*"
     job: "/usr/sbin/logrotate -f /etc/logrotate.conf"
+    state : absent
+
+- name: replace /etc/logrotate.d/rsyslog
+  lineinfile: dest=/etc/logrotate.d/rsyslog
+              regexp='daily'
+              line='hourly'
+              backrefs=yes
+  notify: restart rsyslog
+
+- name: replace /etc/logrotate.d/rsyslog
+  lineinfile: dest=/etc/logrotate.d/rsyslog
+              regexp='weekly'
+              line='hourly'
+              backrefs=yes
+  notify: restart rsyslog
+
+- name: Move logrotate elf
+  command: mv /etc/cron.daily/logrotate /etc/cron.hourly/
+  ignore_errors: True
