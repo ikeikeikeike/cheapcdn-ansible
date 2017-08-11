@@ -236,7 +236,7 @@ elao_supervisor_configs:
         command=/home/{{ username }}/venv/bin/celery
                     -n worker@cheapcdn.net
                     -A scraper worker
-                    -l error
+                    -l info
                     -P gevent
                     -c 30
 
