@@ -70,7 +70,7 @@
   cron:
     name: update update_youtube_dl
     user: "{{ username }}"
-    minute: 30
+    minute: 45
     hour: "*/12"
     day: "*"
     job: "sh /home/{{ username }}/update_youtube_dl.sh >> /tmp/batch.log 2>&1"
