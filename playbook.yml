@@ -19,6 +19,7 @@
     - { role: custom/adduser }
     - { role: custom/sysctl }
     - { role: custom/mnt }
+    - { role: custom/disk }                   # disk utility
     - { role: custom/python }
     - { role: custom/logger }                 # Send rsyslog
 
