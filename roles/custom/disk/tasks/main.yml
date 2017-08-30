@@ -1,0 +1,20 @@
+- name:
+  copy:
+    dest: /usr/local/bin/diskfull_reboot
+    content: |
+      #!/bin/bash
+
+      PER=`df -P / | awk '/%/ {print $5}'`
+      PER=`echo -n "${PER//%}"`
+
+      [ 90 -lt $PER ] && /sbin/reboot
+
+- file:
+    path: /usr/local/bin/diskfull_reboot
+    mode: 0755
+
+- name: Restart server when disk size is coming to full
+  cron:
+    name: Restart server when disk size is coming to full
+    minute: "*/30"
+    job: /usr/local/bin/diskfull_reboot
