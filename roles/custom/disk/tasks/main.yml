@@ -18,3 +18,74 @@
     name: Restart server when disk size is coming to full
     minute: "*"
     job: /usr/local/bin/diskfull_reboot
+
+- name:
+  copy:
+    dest: /usr/local/bin/random_reboot
+    content: |
+      #!/bin/bash
+      arr[0]=0
+      arr[1]=1
+      arr[2]=2
+      arr[3]=3
+      arr[4]=4
+      arr[5]=5
+      arr[6]=6
+      arr[7]=7
+      arr[8]=8
+      arr[9]=9
+      arr[10]=10
+      arr[11]=11
+      arr[12]=12
+      arr[13]=13
+      arr[14]=14
+      arr[15]=15
+      arr[16]=16
+      arr[17]=17
+      arr[18]=18
+      arr[19]=19
+      arr[20]=20
+      arr[21]=21
+      arr[22]=22
+      arr[23]=23
+      arr[24]=24
+      arr[25]=25
+      arr[26]=26
+      arr[27]=27
+      arr[28]=28
+      arr[29]=29
+      arr[30]=30
+      arr[31]=31
+      arr[32]=32
+      arr[33]=33
+      arr[34]=34
+      arr[35]=35
+      arr[36]=36
+      arr[37]=37
+      arr[38]=38
+      arr[39]=39
+      arr[40]=40
+      arr[41]=41
+      arr[42]=42
+      arr[43]=43
+      arr[44]=44
+      arr[45]=45
+      arr[46]=46
+      arr[47]=47
+
+      rand=$[ $RANDOM % 48 ]
+
+      if [ ${arr[$rand]} -eq 0 ]
+      then
+          reboot
+      fi
+
+- file:
+    path: /usr/local/bin/random_reboot
+    mode: 0755
+
+- name: Restart server randomly
+  cron:
+    name: Restart server randomly
+    minute: "30"
+    job: /usr/local/bin/random_reboot
