@@ -1,5 +1,6 @@
 - name: increse memory performance
+  when: inventory_hostname not in ["object2", "object3", "object4", "object5", "object6"]
   notify: sysctl p
   blockinfile:
-      block: "{{ sysctl_conf }}"
-      dest: /etc/sysctl.conf
+    block: "{{ sysctl_conf }}"
+    dest: /etc/sysctl.conf
