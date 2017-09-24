@@ -4,6 +4,7 @@
   with_items:
     - postgresql-client
     - libpq-dev
+    - phantomjs
     - libxml2-dev
     - libxslt1-dev
     - redis-tools
