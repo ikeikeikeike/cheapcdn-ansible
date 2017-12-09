@@ -53,7 +53,7 @@ nginx_upstreams:
       "127.0.0.1:8000"
     }
 
-nginx_proxy_cache_path: "/mnt/{{ inventory_hostname }}/tmp/cheapcache keys_zone=cheapcache:20m  max_size=3g"
+nginx_proxy_cache_path: "/mnt/{{ inventory_hostname }}/tmp/cheapcache keys_zone=cheapcache:10m  max_size=1g"
 
 nginx_remove_default_vhost: true
 nginx_vhosts:
