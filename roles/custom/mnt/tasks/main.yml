@@ -16,8 +16,16 @@
     minute: "*/20"
     job: "/usr/bin/find /mnt/{{ inventory_hostname }}/openshare -maxdepth 1 -type f -user {{ username }} -mmin +{{ cheapcdn.expires }} -exec rm {} \\;"
 
+- name: remove old multipart files on cron
+  cron:
+    name: remove old multipart files on cron
+    minute: "*/50"
+    job: "/usr/bin/find /mnt/{{ inventory_hostname }}/.minio.sys/multipart/openshare -type f -user {{ username }} -mtime +5 -exec rm {} \\;"
+
 - name: remove nginx waste files by cron
   cron:
     name: remove nginx waste files by cron
     minute: "*/40"
     job: "/usr/bin/find /mnt/{{ inventory_hostname }}/tmp/cheapcache -maxdepth 1 -type f -user www-data -mmin +600 -exec rm {} \\;"
+
+
